@@ -1,0 +1,266 @@
+!!python/object:src.engine.trainer.TrainerConfig
+_target: !!python/name:src.engine.trainer.Trainer ''
+add_skipped_step: 0
+aux_data: !!python/object:src.data.part_data.DataConfig_3DMaster_Part
+  IDs_column: null
+  IDs_dropout: null
+  _target: &id002 !!python/name:src.data.part_data.Data ''
+  batch_size: 1
+  caption_column: null
+  cond_img_column: null
+  cond_img_num: 24
+  dataset_csv_path: null
+  depth_column: null
+  depth_dropout: null
+  eval: false
+  global_part: false
+  global_slat_dir: null
+  id_mapping: false
+  max_ids_num: 3
+  max_num: 20
+  metadata_csv: null
+  num_processes: 1
+  num_samples: null
+  part_column: null
+  part_cond_dir: null
+  part_dir: null
+  part_slat_dir: null
+  pointmap_column: null
+  random_flip_ratio: 0.0
+  rotate_slat: false
+  select_prompt_from_list: false
+  shuffle: true
+  slat_norm: false
+  slat_stats_json: null
+  stage: '1'
+  trellis2_global_slat_dir: null
+  trellis2_part_slat_dir: null
+  trellis2_slat_norm: false
+  trellis2_slat_stats_json: null
+  use_determinstic_dataset: false
+  use_pyvips: false
+  video_path_column: null
+  voxel_column: null
+data_per_ema: 800000
+data_per_save: 500000
+data_per_val: 500000
+deepspeed: src/engine/zero_stage2_config.json
+delete_deepspeed_weights: true
+ema_decay: 0.9999
+ema_start_step: 0
+experiment_name: unnamed
+git_commit: ''
+gradient_accumulation_steps: 1
+height: null
+joint_train_prob: 0
+local_rank: -1
+max_steps: 80000
+measure_time: false
+nontrainable_modules: []
+num_epochs: 400
+num_frames: null
+num_valloss_timesteps: 20
+optimizer: !!python/object:src.engine.optimizers.AdamWOptimizerConfig
+  _target: !!python/name:torch.optim.adamw.AdamW ''
+  betas: !!python/tuple
+  - 0.9
+  - 0.999
+  eps: 1.0e-08
+  fused: true
+  lr: 5.0e-05
+  max_grad_norm: 0.1
+  scale_lr: false
+  weight_decay: 0.01
+output_dir: !!python/object/apply:pathlib.PosixPath
+- exps
+pipeline: !!python/object:src.pipelines.jointdit_single_3d_pipeline_stage2_trellis2.JointDiTSingle3DPipelineConfigStage2Trellis2
+  _target: !!python/name:src.pipelines.jointdit_single_3d_pipeline_stage2_trellis2.JointDiTSingle3DPipelineStage2Trellis2 ''
+  call:
+    save_dir: ./sample_results/sample_results_global_trellis2
+  ckpt_path: null
+  clip_ckpt_path: null
+  diffusers_vae_ckpt_path: null
+  distributed_clip: false
+  edm_config: null
+  enable_vae_slicing: true
+  endfix_prompt: null
+  epsilon: 0.001
+  epsilon_voxel: 1.0e-05
+  logit_normal: true
+  match_snr: false
+  max_sequence_length: 256
+  measure_time: false
+  noise_offset: null
+  offload: true
+  proportion_empty_prompts: 0.1
+  s1_save_dir: ./sample_results
+  scheduler_kwargs: null
+  seed: 666
+  slat_adapter_config: !!python/object:src.models.autoencoders.slat_adapter_trellis2.FullPartToTrellis2SLatAdapterConfig
+    _target: !!python/name:src.models.autoencoders.slat_adapter_trellis2.FullPartToTrellis2SLatAdapter ''
+    adapter_ckpt_path: null
+    coord_fourier_bands: 6
+    hidden_dim: 512
+    num_heads: 8
+    num_layers: 4
+    old_channels: 8
+    old_resolution: 64
+    trellis2_channels: 32
+    trellis2_resolution: 32
+  target: null
+  text_encoder_config: null
+  timestep_shift: 1.0
+  transformer_config: null
+  trellis2_flow_init_strength: 0.5
+  trellis2_pipeline_config_file: pipeline_local.json
+  trellis2_pretrained: /root/data/pretrained_models/trellis.2-4B/ckpts
+  trellis2_root: /root/data/TRELLIS.2
+  trellis2_shape_resolution: 512
+  unet_config: null
+  use_trellis2_flow_refine: false
+  vae_config: null
+  voxel_vae_config: null
+relative_ckpt_dir: !!python/object/apply:pathlib.PosixPath
+- ckpts
+resume: true
+resume_ckpt_path: exps/unnamed/checkpoints/checkpoint-55000
+resume_no_skip: false
+save_ema: false
+scheduler: !!python/object:src.engine.schedulers.SchedulerConfig
+  name: constant
+  num_warmup_steps: null
+  num_warmup_steps_rate: null
+seed: 1778716740
+skip_aux_data: null
+skip_train_data: null
+stability: !!python/object:src.engine.stability.StabilityConfig
+  anomaly_times: 5
+  consecutive_anomalies_steps: 100
+  loss_median_window: 10
+  skip_steps: 1
+  stability_protection: true
+step_per_ema: 1
+step_per_measure_time: 1
+step_per_save: 5000
+step_per_tb: 1
+step_per_val: 5000
+step_per_valloss: null
+step_per_valmetrics: null
+tb_add_image: false
+tb_add_video: false
+timestamp: 2026-05-14_075900
+train_data: !!python/object:src.data.global_slat_pair_data.GlobalSLatPairDataConfig
+  _target: &id001 !!python/name:src.data.global_slat_pair_data.GlobalSLatPairData ''
+  batch_size: 1
+  dataset_csv_path: dataset/partversexl/home_sample_1000.csv
+  num_processes: 2
+  num_samples: 200
+  old_global_slat_dir: dataset/partversexl/textured_mesh_latents/dinov2_vitl14_reg_slat_enc_swin8_B_64l8_fp16
+  shuffle: true
+  slat_norm: true
+  trellis2_global_slat_dir: dataset/partversexl/trellis2_global_shape_latents
+  trellis2_slat_norm: true
+  trellis2_slat_stats_json: dataset/partversexl/trellis2_shape_latents_stats.json
+trainable_modules:
+- slat_adapter
+training_precision: bf16
+unet_ckpt_path: null
+use_ema: true
+val_at_begin: false
+val_data: !!python/object:src.data.global_slat_pair_data.GlobalSLatPairDataConfig
+  _target: *id001
+  batch_size: 1
+  dataset_csv_path: dataset/partversexl/home_sample_1000.csv
+  num_processes: 1
+  num_samples: 8
+  old_global_slat_dir: dataset/partversexl/textured_mesh_latents/dinov2_vitl14_reg_slat_enc_swin8_B_64l8_fp16
+  shuffle: false
+  slat_norm: true
+  trellis2_global_slat_dir: dataset/partversexl/trellis2_global_shape_latents
+  trellis2_slat_norm: true
+  trellis2_slat_stats_json: dataset/partversexl/trellis2_shape_latents_stats.json
+val_types: []
+valloss_at_begin: false
+valloss_data: !!python/object:src.data.part_data.DataConfig_3DMaster_Part
+  IDs_column: null
+  IDs_dropout: null
+  _target: *id002
+  batch_size: 1
+  caption_column: null
+  cond_img_column: null
+  cond_img_num: 24
+  dataset_csv_path: null
+  depth_column: null
+  depth_dropout: null
+  eval: false
+  global_part: false
+  global_slat_dir: null
+  id_mapping: false
+  max_ids_num: 3
+  max_num: 20
+  metadata_csv: null
+  num_processes: 1
+  num_samples: 1
+  part_column: null
+  part_cond_dir: null
+  part_dir: null
+  part_slat_dir: null
+  pointmap_column: null
+  random_flip_ratio: 0.0
+  rotate_slat: false
+  select_prompt_from_list: false
+  shuffle: true
+  slat_norm: false
+  slat_stats_json: null
+  stage: '1'
+  trellis2_global_slat_dir: null
+  trellis2_part_slat_dir: null
+  trellis2_slat_norm: false
+  trellis2_slat_stats_json: null
+  use_determinstic_dataset: false
+  use_pyvips: false
+  video_path_column: null
+  voxel_column: null
+valmetrics_at_begin: false
+valmetrics_data: !!python/object:src.data.part_data.DataConfig_3DMaster_Part
+  IDs_column: null
+  IDs_dropout: null
+  _target: *id002
+  batch_size: 1
+  caption_column: null
+  cond_img_column: null
+  cond_img_num: 24
+  dataset_csv_path: null
+  depth_column: null
+  depth_dropout: null
+  eval: false
+  global_part: false
+  global_slat_dir: null
+  id_mapping: false
+  max_ids_num: 3
+  max_num: 20
+  metadata_csv: null
+  num_processes: 1
+  num_samples: 1
+  part_column: null
+  part_cond_dir: null
+  part_dir: null
+  part_slat_dir: null
+  pointmap_column: null
+  random_flip_ratio: 0.0
+  rotate_slat: false
+  select_prompt_from_list: false
+  shuffle: true
+  slat_norm: false
+  slat_stats_json: null
+  stage: '1'
+  trellis2_global_slat_dir: null
+  trellis2_part_slat_dir: null
+  trellis2_slat_norm: false
+  trellis2_slat_stats_json: null
+  use_determinstic_dataset: false
+  use_pyvips: false
+  video_path_column: null
+  voxel_column: null
+verbose: false
+width: null
